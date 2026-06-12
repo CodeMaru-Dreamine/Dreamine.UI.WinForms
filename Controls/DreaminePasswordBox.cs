@@ -53,23 +53,14 @@ public class DreaminePasswordBox : UserControl
     // ── Constructor ───────────────────────────────────────
     public DreaminePasswordBox()
     {
-        SetStyle(
-            ControlStyles.AllPaintingInWmPaint |
-            ControlStyles.UserPaint |
-            ControlStyles.DoubleBuffer |
-            ControlStyles.ResizeRedraw, true);
-
-        BackColor = DreamineTheme.InputBackground;
-        ForeColor = DreamineTheme.TextPrimary;
-        Font      = new Font("Segoe UI", 10f, FontStyle.Regular, GraphicsUnit.Point);
-        Height    = 36;
-
+        // _inner must be created first — SetStyle and property setters below
+        // can trigger OnLayout / ForeColor / Font overrides before the field is set.
         _inner = new TextBox
         {
-            BorderStyle  = BorderStyle.None,
-            BackColor    = DreamineTheme.InputBackground,
-            ForeColor    = DreamineTheme.TextPrimary,
-            Font         = Font,
+            BorderStyle          = BorderStyle.None,
+            BackColor            = DreamineTheme.InputBackground,
+            ForeColor            = DreamineTheme.TextPrimary,
+            Font                 = new Font("Segoe UI", 10f, FontStyle.Regular, GraphicsUnit.Point),
             UseSystemPasswordChar = true,
         };
 
@@ -82,12 +73,24 @@ public class DreaminePasswordBox : UserControl
                 SendMessage(_inner.Handle, EM_SETCUEBANNER, (IntPtr)1, _hint);
         };
 
+        SetStyle(
+            ControlStyles.AllPaintingInWmPaint |
+            ControlStyles.UserPaint |
+            ControlStyles.DoubleBuffer |
+            ControlStyles.ResizeRedraw, true);
+
+        BackColor = DreamineTheme.InputBackground;
+        ForeColor = DreamineTheme.TextPrimary;
+        Font      = _inner.Font;
+        Height    = 36;
+
         Controls.Add(_inner);
     }
 
     protected override void OnLayout(LayoutEventArgs e)
     {
         base.OnLayout(e);
+        if (_inner == null) return;
         _inner.SetBounds(6, (Height - _inner.PreferredHeight) / 2,
             Width - 12, _inner.PreferredHeight);
     }
