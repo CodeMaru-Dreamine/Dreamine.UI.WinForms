@@ -43,7 +43,8 @@ public class DreamineCheckBox : Control
             ControlStyles.AllPaintingInWmPaint |
             ControlStyles.UserPaint |
             ControlStyles.DoubleBuffer |
-            ControlStyles.ResizeRedraw, true);
+            ControlStyles.ResizeRedraw |
+            ControlStyles.SupportsTransparentBackColor, true);
 
         BackColor = Color.Transparent;
         ForeColor = DreamineTheme.TextPrimary;

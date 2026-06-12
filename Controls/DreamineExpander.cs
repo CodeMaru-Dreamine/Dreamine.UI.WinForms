@@ -30,7 +30,13 @@ public class DreamineExpander : UserControl
     public bool IsExpanded
     {
         get => _isExpanded;
-        set { _isExpanded = value; ApplyExpandState(); }
+        set
+        {
+            if (_isExpanded == value) return;
+            _isExpanded = value;
+            ApplyExpandState();
+            ExpandedChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public Panel Content => _contentPanel;
@@ -108,7 +114,6 @@ public class DreamineExpander : UserControl
     private void OnHeaderClick(object? s, EventArgs e)
     {
         IsExpanded = !IsExpanded;
-        ExpandedChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void ApplyExpandState()
