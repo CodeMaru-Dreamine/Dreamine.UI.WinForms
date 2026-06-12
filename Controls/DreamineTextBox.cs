@@ -45,13 +45,13 @@ public class DreamineTextBox : UserControl
     public override Color ForeColor
     {
         get => base.ForeColor;
-        set { base.ForeColor = value; _inner.ForeColor = value; }
+        set { base.ForeColor = value; if (_inner != null) _inner.ForeColor = value; }
     }
 
     public new Font Font
     {
         get => base.Font;
-        set { base.Font = value; _inner.Font = value; }
+        set { base.Font = value; if (_inner != null) _inner.Font = value; }
     }
 
     public new event EventHandler? TextChanged;
