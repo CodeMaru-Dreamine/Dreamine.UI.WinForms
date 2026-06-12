@@ -45,6 +45,23 @@ public class DreamineComboBox : UserControl
     // ── Constructor ───────────────────────────────────────
     public DreamineComboBox()
     {
+        // _inner must be created first — SetStyle / property setters trigger
+        // OnLayout and ForeColor/Font overrides before the field is otherwise set.
+        _inner = new ComboBox
+        {
+            FlatStyle     = FlatStyle.Flat,
+            BackColor     = DreamineTheme.InputBackground,
+            ForeColor     = DreamineTheme.TextPrimary,
+            Font          = new Font("Segoe UI", 10f, FontStyle.Regular, GraphicsUnit.Point),
+            DropDownStyle = ComboBoxStyle.DropDownList,
+        };
+
+        _inner.GotFocus  += (_, _) => { _isFocused = true;  Invalidate(); };
+        _inner.LostFocus += (_, _) => { _isFocused = false; Invalidate(); };
+        _inner.SelectedIndexChanged += (s, e) => SelectedIndexChanged?.Invoke(this, e);
+        _inner.DrawMode  = DrawMode.OwnerDrawFixed;
+        _inner.DrawItem  += OnDrawItem;
+
         SetStyle(
             ControlStyles.AllPaintingInWmPaint |
             ControlStyles.UserPaint |
@@ -53,23 +70,8 @@ public class DreamineComboBox : UserControl
 
         BackColor = DreamineTheme.InputBackground;
         ForeColor = DreamineTheme.TextPrimary;
-        Font      = new Font("Segoe UI", 10f, FontStyle.Regular, GraphicsUnit.Point);
+        Font      = _inner.Font;
         Height    = 36;
-
-        _inner = new ComboBox
-        {
-            FlatStyle   = FlatStyle.Flat,
-            BackColor   = DreamineTheme.InputBackground,
-            ForeColor   = DreamineTheme.TextPrimary,
-            Font        = Font,
-            DropDownStyle = ComboBoxStyle.DropDownList,
-        };
-
-        _inner.GotFocus  += (_, _) => { _isFocused = true;  Invalidate(); };
-        _inner.LostFocus += (_, _) => { _isFocused = false; Invalidate(); };
-        _inner.SelectedIndexChanged += (s, e) => SelectedIndexChanged?.Invoke(this, e);
-        _inner.DrawMode = DrawMode.OwnerDrawFixed;
-        _inner.DrawItem += OnDrawItem;
 
         Controls.Add(_inner);
     }
@@ -77,6 +79,7 @@ public class DreamineComboBox : UserControl
     protected override void OnLayout(LayoutEventArgs e)
     {
         base.OnLayout(e);
+        if (_inner == null) return;
         _inner.SetBounds(0, (Height - _inner.PreferredHeight) / 2,
             Width, _inner.PreferredHeight);
     }
