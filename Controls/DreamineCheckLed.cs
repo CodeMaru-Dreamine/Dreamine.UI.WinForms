@@ -66,8 +66,11 @@ public class DreamineCheckLed : Control
     // ── Pulse ─────────────────────────────────────────────
     private void StartPulse()
     {
-        _pulseTimer ??= new System.Windows.Forms.Timer { Interval = 40 };
-        _pulseTimer.Tick += OnPulseTick;
+        if (_pulseTimer == null)
+        {
+            _pulseTimer = new System.Windows.Forms.Timer { Interval = 40 };
+            _pulseTimer.Tick += OnPulseTick;
+        }
         _pulseTimer.Start();
     }
 
