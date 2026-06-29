@@ -107,11 +107,34 @@ public class DreamineButton : Control
             Command.Execute(CommandParameter);
     }
 
+    /// <summary>
+    /// 모서리를 채울 때 쓸 "실제로 보이는" 배경색을 찾는다. 바로 위 부모가
+    /// Color.Transparent(예: 버튼을 담는 FlowLayoutPanel)처럼 알파값이 불완전하면
+    /// 그 색은 그대로 채워도 의미가 없으므로(그냥 아무것도 안 그려진 효과),
+    /// 불투명한 배경을 가진 조상을 찾을 때까지 위로 올라간다.
+    /// </summary>
+    private Color GetEffectiveParentBackColor()
+    {
+        for (Control? p = Parent; p != null; p = p.Parent)
+        {
+            if (p.BackColor.A == 255)
+                return p.BackColor;
+        }
+        return FindForm()?.BackColor ?? DreamineTheme.AppBackground;
+    }
+
     // ── Paint ─────────────────────────────────────────────
     protected override void OnPaint(PaintEventArgs e)
     {
         var g    = e.Graphics;
         var rect = new Rectangle(1, 1, Width - 2, Height - 2);
+
+        // 둥근 사각형 바깥쪽(네 귀퉁이)을 부모의 실제 배경색으로 먼저 채운다.
+        // Win32 Region으로 잘라내는 방식은 안티앨리어싱이 없어 작은 반경에서 오히려
+        // 더 거칠게 보이므로, 대신 "부모 배경색 채우기 + AA 처리된 둥근 도형"으로
+        // 귀퉁이가 부모 배경에 자연스럽게 섞여 보이도록 한다(부모가 단색 배경일 때 효과적).
+        using (var cornerBrush = new SolidBrush(GetEffectiveParentBackColor()))
+            g.FillRectangle(cornerBrush, 0, 0, Width, Height);
 
         // background color
         var bg = BackColor;
