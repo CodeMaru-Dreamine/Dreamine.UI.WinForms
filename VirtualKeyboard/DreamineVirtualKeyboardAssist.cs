@@ -34,7 +34,13 @@ public static class DreamineVirtualKeyboardAssist
 
         var screenLocation = textBox.Parent?.PointToScreen(textBox.Location) ?? Cursor.Position;
         var form = new DreamineVirtualKeyboardForm(textBox, layout);
-        form.Location = new System.Drawing.Point(screenLocation.X, screenLocation.Y + textBox.Height + 4);
+        var workingArea = Screen.FromControl(textBox).WorkingArea;
+        var x = Math.Clamp(screenLocation.X, workingArea.Left, Math.Max(workingArea.Left, workingArea.Right - form.Width));
+        var y = screenLocation.Y + textBox.Height + 4;
+        if (y + form.Height > workingArea.Bottom)
+            y = Math.Max(workingArea.Top, screenLocation.Y - form.Height - 4);
+
+        form.Location = new System.Drawing.Point(x, y);
         form.FormClosed += (_, _) => _open.Remove(textBox);
 
         _open[textBox] = form;

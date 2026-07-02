@@ -42,6 +42,20 @@ public class DreamineTextBox : UserControl
         set { _inner.ReadOnly = value; Invalidate(); }
     }
 
+    public int SelectionStart
+    {
+        get => _inner.SelectionStart;
+        set => _inner.SelectionStart = Math.Clamp(value, 0, _inner.TextLength);
+    }
+
+    public int SelectionLength
+    {
+        get => _inner.SelectionLength;
+        set => _inner.SelectionLength = Math.Clamp(value, 0, _inner.TextLength - _inner.SelectionStart);
+    }
+
+    public IntPtr TextBoxHandle => _inner.Handle;
+
     public override Color ForeColor
     {
         get => base.ForeColor;
@@ -55,6 +69,69 @@ public class DreamineTextBox : UserControl
     }
 
     public new event EventHandler? TextChanged;
+
+    public void InsertText(string text)
+    {
+        if (_inner.ReadOnly)
+            return;
+
+        _inner.SelectedText = text;
+        _inner.Focus();
+    }
+
+    public void ReplaceTextTail(int replaceCount, string text)
+    {
+        if (_inner.ReadOnly)
+            return;
+
+        var currentText = _inner.Text ?? string.Empty;
+        var selectionStart = Math.Clamp(_inner.SelectionStart, 0, currentText.Length);
+        var selectionLength = Math.Clamp(_inner.SelectionLength, 0, currentText.Length - selectionStart);
+
+        if (selectionLength > 0)
+        {
+            _inner.SelectedText = text;
+        }
+        else
+        {
+            var removeStart = Math.Max(0, selectionStart - replaceCount);
+            removeStart = Math.Min(removeStart, currentText.Length);
+            var removeLength = Math.Clamp(selectionStart - removeStart, 0, currentText.Length - removeStart);
+            _inner.Text = currentText.Remove(removeStart, removeLength).Insert(removeStart, text);
+            _inner.SelectionStart = removeStart + text.Length;
+        }
+
+        _inner.Focus();
+    }
+
+    public void Backspace()
+    {
+        if (_inner.ReadOnly)
+            return;
+
+        var currentText = _inner.Text ?? string.Empty;
+        var selectionStart = Math.Clamp(_inner.SelectionStart, 0, currentText.Length);
+        var selectionLength = Math.Clamp(_inner.SelectionLength, 0, currentText.Length - selectionStart);
+
+        if (selectionLength > 0)
+        {
+            _inner.SelectedText = string.Empty;
+        }
+        else if (selectionStart > 0)
+        {
+            _inner.Text = currentText.Remove(selectionStart - 1, 1);
+            _inner.SelectionStart = selectionStart - 1;
+        }
+
+        _inner.Focus();
+    }
+
+    public string GetTextBeforeCaret()
+    {
+        var currentText = _inner.Text ?? string.Empty;
+        var caret = Math.Clamp(_inner.SelectionStart, 0, currentText.Length);
+        return currentText[..caret];
+    }
 
     // ── Constructor ───────────────────────────────────────
     public DreamineTextBox()
