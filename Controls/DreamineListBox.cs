@@ -4,57 +4,155 @@ using Dreamine.UI.WinForms;
 namespace Dreamine.UI.WinForms.Controls;
 
 /// <summary>
-/// Dreamine 커스텀 ListBox. 다크 테마 + 포커스 테두리.
-/// 내부적으로 표준 <see cref="ListBox"/>를 감싸며, WPF DreamineListBox와 유사한 API를 제공한다.
+/// \if KO
+/// <para>내부 <see cref="ListBox"/>에 다크 테마, 포커스 테두리 및 자동 스크롤을 추가한 WinForms 래퍼입니다.</para>
+/// \endif
+/// \if EN
+/// <para>Provides a WinForms wrapper that adds dark-theme styling, a focus border, and automatic scrolling to an inner <see cref="ListBox"/>.</para>
+/// \endif
 /// </summary>
 public class DreamineListBox : UserControl
 {
+    /// <summary>
+    /// \if KO
+    /// <para>inner 값을 보관합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Stores the inner value.</para>
+    /// \endif
+    /// </summary>
     private readonly ListBox _inner;
+    /// <summary>
+    /// \if KO
+    /// <para>is Focused 값을 보관합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Stores the is focused value.</para>
+    /// \endif
+    /// </summary>
     private bool _isFocused;
 
+    /// <summary>
+    /// \if KO
+    /// <para>내부 목록의 항목 컬렉션을 가져옵니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets the item collection of the inner list.</para>
+    /// \endif
+    /// </summary>
     public ListBox.ObjectCollection Items => _inner.Items;
 
+    /// <summary>
+    /// \if KO
+    /// <para>현재 선택한 항목을 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the currently selected item.</para>
+    /// \endif
+    /// </summary>
     public object? SelectedItem
     {
         get => _inner.SelectedItem;
         set => _inner.SelectedItem = value;
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>현재 선택한 항목의 인덱스를 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the index of the currently selected item.</para>
+    /// \endif
+    /// </summary>
     public int SelectedIndex
     {
         get => _inner.SelectedIndex;
         set => _inner.SelectedIndex = value;
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>내부 목록의 데이터 원본을 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the data source of the inner list.</para>
+    /// \endif
+    /// </summary>
     public object? DataSource
     {
         get => _inner.DataSource;
         set => _inner.DataSource = value;
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>래퍼와 내부 목록의 전경색을 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the foreground color of both the wrapper and inner list.</para>
+    /// \endif
+    /// </summary>
     public override Color ForeColor
     {
         get => base.ForeColor;
         set { base.ForeColor = value; _inner.ForeColor = value; }
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>래퍼와 내부 목록의 글꼴을 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the font of both the wrapper and inner list.</para>
+    /// \endif
+    /// </summary>
     public new Font Font
     {
         get => base.Font;
         set { base.Font = value; _inner.Font = value; }
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>내부 목록의 선택 인덱스가 변경될 때 발생합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Occurs when the selected index of the inner list changes.</para>
+    /// \endif
+    /// </summary>
     public event EventHandler? SelectedIndexChanged;
+    /// <summary>
+    /// \if KO
+    /// <para>내부 목록 항목을 마우스로 두 번 클릭할 때 발생합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Occurs when an item in the inner list is double-clicked with the mouse.</para>
+    /// \endif
+    /// </summary>
     public new event MouseEventHandler? DoubleClick
     {
         add => _inner.MouseDoubleClick += value;
         remove => _inner.MouseDoubleClick -= value;
     }
 
-    /// <summary>새 항목이 추가될 때마다 자동으로 맨 아래로 스크롤할지 여부
-    /// (WPF AutoScrollListBoxBehavior.IsEnabled와 동일한 데모 목적).</summary>
+    /// <summary>
+    /// \if KO
+    /// <para>새 항목 알림 또는 선택 변경 후 목록 끝으로 자동 스크롤할지 여부를 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets whether the list automatically scrolls to the end after item notification or selection changes.</para>
+    /// \endif
+    /// </summary>
     public bool AutoScrollToEnd { get; set; }
 
+    /// <summary>
+    /// \if KO
+    /// <para>내부 목록, 이벤트 전달 및 Dreamine 테마 기본값을 구성합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Configures the inner list, event forwarding, and Dreamine theme defaults.</para>
+    /// \endif
+    /// </summary>
     public DreamineListBox()
     {
         _inner = new ListBox
@@ -92,13 +190,36 @@ public class DreamineListBox : UserControl
         Controls.Add(_inner);
     }
 
-    /// <summary>항목 추가 후, AutoScrollToEnd가 켜져 있으면 맨 아래로 스크롤한다.</summary>
+    /// <summary>
+    /// \if KO
+    /// <para>항목 추가 후 자동 스크롤이 활성화되어 있으면 목록 끝으로 이동합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Moves to the end of the list after an item is added when automatic scrolling is enabled.</para>
+    /// \endif
+    /// </summary>
     public void NotifyItemAdded()
     {
         if (AutoScrollToEnd && _inner.Items.Count > 0)
             _inner.TopIndex = _inner.Items.Count - 1;
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>현재 포커스 상태에 맞게 둥근 배경과 테두리를 그립니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Draws the rounded background and border for the current focus state.</para>
+    /// \endif
+    /// </summary>
+    /// <param name="e">
+    /// \if KO
+    /// <para>컨트롤 그리기 이벤트 인수입니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>The control paint event arguments.</para>
+    /// \endif
+    /// </param>
     protected override void OnPaint(PaintEventArgs e)
     {
         var g = e.Graphics;
@@ -109,5 +230,13 @@ public class DreamineListBox : UserControl
         DreamineDrawHelper.FillRoundedRect(g, bgBrush, pen, rect, DreamineTheme.CornerRadiusSmall);
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>목록 래퍼의 기본 크기를 가져옵니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets the default size of the list wrapper.</para>
+    /// \endif
+    /// </summary>
     protected override Size DefaultSize => new(220, 100);
 }

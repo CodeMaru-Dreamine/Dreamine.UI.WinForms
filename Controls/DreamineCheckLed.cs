@@ -5,24 +5,84 @@ using Dreamine.UI.WinForms;
 namespace Dreamine.UI.WinForms.Controls;
 
 /// <summary>
-/// Dreamine LED 인디케이터. WPF DreamineCheckLed와 동일한 API:
-/// IsOn, IsPulse, Corner, Diameter.
+/// \if KO
+/// <para>켜짐, 맥동, 지름 및 모서리 배치를 지원하는 Dreamine WinForms LED 표시 컨트롤입니다.</para>
+/// \endif
+/// \if EN
+/// <para>Provides a Dreamine WinForms LED indicator with on, pulse, diameter, and corner-placement support.</para>
+/// \endif
 /// </summary>
 public class DreamineCheckLed : Control
 {
+    /// <summary>
+    /// \if KO
+    /// <para>pulse Timer 값을 보관합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Stores the pulse timer value.</para>
+    /// \endif
+    /// </summary>
     private System.Windows.Forms.Timer? _pulseTimer;
+    /// <summary>
+    /// \if KO
+    /// <para>pulse Alpha 값을 보관합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Stores the pulse alpha value.</para>
+    /// \endif
+    /// </summary>
     private float _pulseAlpha = 1f;
+    /// <summary>
+    /// \if KO
+    /// <para>pulse Up 값을 보관합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Stores the pulse up value.</para>
+    /// \endif
+    /// </summary>
     private bool  _pulseUp    = false;
 
     // ── Properties ────────────────────────────────────────
+    /// <summary>
+    /// \if KO
+    /// <para>is On 값을 보관합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Stores the is on value.</para>
+    /// \endif
+    /// </summary>
     private bool _isOn = true;
+    /// <summary>
+    /// \if KO
+    /// <para>LED가 켜져 있는지 여부를 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets whether the LED is on.</para>
+    /// \endif
+    /// </summary>
     public bool IsOn
     {
         get => _isOn;
         set { _isOn = value; Invalidate(); }
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>is Pulse 값을 보관합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Stores the is pulse value.</para>
+    /// \endif
+    /// </summary>
     private bool _isPulse;
+    /// <summary>
+    /// \if KO
+    /// <para>불투명도 맥동 애니메이션을 사용할지 여부를 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets whether the opacity pulse animation is enabled.</para>
+    /// \endif
+    /// </summary>
     public bool IsPulse
     {
         get => _isPulse;
@@ -35,14 +95,46 @@ public class DreamineCheckLed : Control
         }
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>corner 값을 보관합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Stores the corner value.</para>
+    /// \endif
+    /// </summary>
     private LedCorner _corner = LedCorner.TopRight;
+    /// <summary>
+    /// \if KO
+    /// <para>컨트롤 영역에서 LED를 그릴 모서리를 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the corner in the control bounds where the LED is drawn.</para>
+    /// \endif
+    /// </summary>
     public LedCorner Corner
     {
         get => _corner;
         set { _corner = value; Invalidate(); }
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>diameter 값을 보관합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Stores the diameter value.</para>
+    /// \endif
+    /// </summary>
     private float _diameter = 16f;
+    /// <summary>
+    /// \if KO
+    /// <para>LED 원의 지름을 가져오거나 설정합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Gets or sets the diameter of the LED circle.</para>
+    /// \endif
+    /// </summary>
     public float Diameter
     {
         get => _diameter;
@@ -50,6 +142,14 @@ public class DreamineCheckLed : Control
     }
 
     // ── Constructor ───────────────────────────────────────
+    /// <summary>
+    /// \if KO
+    /// <para>사용자 지정 그리기 스타일과 기본 LED 크기를 구성합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Configures custom-painting styles and the default LED size.</para>
+    /// \endif
+    /// </summary>
     public DreamineCheckLed()
     {
         SetStyle(
@@ -64,6 +164,14 @@ public class DreamineCheckLed : Control
     }
 
     // ── Pulse ─────────────────────────────────────────────
+    /// <summary>
+    /// \if KO
+    /// <para>맥동 타이머를 만들거나 다시 시작합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Creates or restarts the pulse timer.</para>
+    /// \endif
+    /// </summary>
     private void StartPulse()
     {
         if (_pulseTimer == null)
@@ -74,6 +182,14 @@ public class DreamineCheckLed : Control
         _pulseTimer.Start();
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>맥동 타이머를 중지하고 불투명도를 초기 상태로 복원합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Stops the pulse timer and restores opacity to its initial state.</para>
+    /// \endif
+    /// </summary>
     private void StopPulse()
     {
         if (_pulseTimer != null)
@@ -85,6 +201,30 @@ public class DreamineCheckLed : Control
         Invalidate();
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>타이머 틱마다 맥동 불투명도와 방향을 갱신합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Updates pulse opacity and direction on each timer tick.</para>
+    /// \endif
+    /// </summary>
+    /// <param name="s">
+    /// \if KO
+    /// <para>이벤트를 발생시킨 타이머입니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>The timer that raised the event.</para>
+    /// \endif
+    /// </param>
+    /// <param name="e">
+    /// \if KO
+    /// <para>이벤트 인수입니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>The event arguments.</para>
+    /// \endif
+    /// </param>
     private void OnPulseTick(object? s, EventArgs e)
     {
         _pulseAlpha += _pulseUp ? 0.06f : -0.06f;
@@ -93,6 +233,22 @@ public class DreamineCheckLed : Control
         Invalidate();
     }
 
+    /// <summary>
+    /// \if KO
+    /// <para>맥동 타이머를 해제한 뒤 기본 컨트롤 리소스를 해제합니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Disposes the pulse timer before releasing base-control resources.</para>
+    /// \endif
+    /// </summary>
+    /// <param name="disposing">
+    /// \if KO
+    /// <para>관리되는 리소스도 해제하면 <see langword="true"/>입니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para><see langword="true"/> to dispose managed resources as well.</para>
+    /// \endif
+    /// </param>
     protected override void Dispose(bool disposing)
     {
         if (disposing) { _pulseTimer?.Dispose(); _pulseTimer = null; }
@@ -100,6 +256,22 @@ public class DreamineCheckLed : Control
     }
 
     // ── Paint ─────────────────────────────────────────────
+    /// <summary>
+    /// \if KO
+    /// <para>현재 켜짐, 맥동 및 모서리 상태에 맞게 LED 광택과 링을 그립니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>Draws LED glow and rings for the current on, pulse, and corner state.</para>
+    /// \endif
+    /// </summary>
+    /// <param name="e">
+    /// \if KO
+    /// <para>컨트롤 그리기 이벤트 인수입니다.</para>
+    /// \endif
+    /// \if EN
+    /// <para>The control paint event arguments.</para>
+    /// \endif
+    /// </param>
     protected override void OnPaint(PaintEventArgs e)
     {
         var g = e.Graphics;
