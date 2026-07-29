@@ -8,6 +8,15 @@
 
 # Dreamine.UI.WinForms
 
+[![license](https://img.shields.io/github/license/CodeMaru-Dreamine/Dreamine.UI.WinForms?label=license)](./LICENSE)
+[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![WinForms](https://img.shields.io/badge/UI-WinForms-0078D4?logo=windows&logoColor=white)](https://learn.microsoft.com/dotnet/desktop/winforms/)
+[![Windows](https://img.shields.io/badge/platform-Windows-0078D4?logo=windows&logoColor=white)](https://www.microsoft.com/windows)
+
+[![NuGet](https://img.shields.io/nuget/v/Dreamine.UI.WinForms?logo=nuget&label=nuget)](https://www.nuget.org/packages/Dreamine.UI.WinForms)
+[![downloads](https://img.shields.io/nuget/dt/Dreamine.UI.WinForms?logo=nuget&label=downloads)](https://www.nuget.org/packages/Dreamine.UI.WinForms)
+[![GitHub stars](https://img.shields.io/github/stars/CodeMaru-Dreamine/Dreamine.UI.WinForms?logo=github&label=stars)](https://github.com/CodeMaru-Dreamine/Dreamine.UI.WinForms/stargazers)
+
 **Dreamine.UI.WinForms**는 `Dreamine.UI.Wpf.Controls`와 동일한 API를 WinForms 환경에서 제공하는 다크 테마 커스텀 컨트롤 라이브러리입니다.
 
 동일한 속성 이름(`Content`, `IsChecked`, `IsExpanded` 등)을 사용하므로, 하나의 ViewModel을 WPF와 WinForms 양쪽에서 코드 중복 없이 재사용할 수 있습니다.
