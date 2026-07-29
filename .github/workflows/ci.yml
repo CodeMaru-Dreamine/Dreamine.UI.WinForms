@@ -157,11 +157,11 @@ jobs:
           /d:sonar.projectBaseDir="${{ github.workspace }}\src\UI.WinForms"
           /d:sonar.scm.provider=git
           /d:sonar.sourceEncoding=UTF-8
-          /d:sonar.cs.opencover.reportsPaths="$env:RUNNER_TEMP\TestResults\**\coverage.opencover.xml"
+          /d:sonar.cs.opencover.reportsPaths="$env:RUNNER_TEMP\TestResults\coverage.opencover.xml"
           /d:sonar.cs.vstest.reportsPaths="$env:RUNNER_TEMP\TestResults\**\*.trx"
           /d:sonar.exclusions="**/bin/**,**/obj/**,**/TestResults/**,**/*.png,**/*.ico"
-          /d:sonar.coverage.exclusions="tests/**,Controls/**,MessageBox/**,Popup/**,VirtualKeyboard/DreamineVirtualKeyboard*.cs,VirtualKeyboard/ImeHelper.cs"
-          /d:sonar.cpd.exclusions="tests/**"
+          /d:sonar.coverage.exclusions="**/tests/**,**/Controls/**,**/MessageBox/**,**/Popup/**,**/VirtualKeyboard/DreamineVirtualKeyboard*.cs,**/VirtualKeyboard/ImeHelper.cs"
+          /d:sonar.cpd.exclusions="**/tests/**,**/Controls/**,**/MessageBox/**,**/Popup/**,**/VirtualKeyboard/**"
 
       - name: Build and test
         shell: pwsh
@@ -171,10 +171,14 @@ jobs:
           --no-restore
           --configuration Release
           -m:1
-          --collect:"XPlat Code Coverage"
-          --settings src/UI.WinForms/.github/coverlet.runsettings
           --results-directory "$env:RUNNER_TEMP\TestResults"
           --logger "trx;LogFileName=tests.trx"
+          /p:CollectCoverage=true
+          /p:CoverletOutputFormat=opencover
+          /p:CoverletOutput="$env:RUNNER_TEMP\TestResults\coverage"
+          /p:Include="[Dreamine.UI.WinForms]*"
+          /p:Exclude="[*.Tests]*"
+          /p:ExcludeByFile="**/obj/**%2c**/bin/**%2c**/Controls/**%2c**/MessageBox/**%2c**/Popup/**%2c**/VirtualKeyboard/DreamineVirtualKeyboard*.cs%2c**/VirtualKeyboard/ImeHelper.cs"
 
       - name: Pack
         shell: pwsh
