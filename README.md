@@ -8,6 +8,15 @@
 
 # Dreamine.UI.WinForms
 
+[![license](https://img.shields.io/github/license/CodeMaru-Dreamine/Dreamine.UI.WinForms?label=license)](./LICENSE)
+[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![WinForms](https://img.shields.io/badge/UI-WinForms-0078D4?logo=windows&logoColor=white)](https://learn.microsoft.com/dotnet/desktop/winforms/)
+[![Windows](https://img.shields.io/badge/platform-Windows-0078D4?logo=windows&logoColor=white)](https://www.microsoft.com/windows)
+
+[![NuGet](https://img.shields.io/nuget/v/Dreamine.UI.WinForms?logo=nuget&label=nuget)](https://www.nuget.org/packages/Dreamine.UI.WinForms)
+[![downloads](https://img.shields.io/nuget/dt/Dreamine.UI.WinForms?logo=nuget&label=downloads)](https://www.nuget.org/packages/Dreamine.UI.WinForms)
+[![GitHub stars](https://img.shields.io/github/stars/CodeMaru-Dreamine/Dreamine.UI.WinForms?logo=github&label=stars)](https://github.com/CodeMaru-Dreamine/Dreamine.UI.WinForms/stargazers)
+
 **Dreamine.UI.WinForms** provides a full set of dark-theme custom WinForms controls that mirror the API surface of `Dreamine.UI.Wpf.Controls`.
 
 By using identical property names (`Content`, `IsChecked`, `IsExpanded`, etc.), a single ViewModel can be reused across WPF and WinForms without duplication.
