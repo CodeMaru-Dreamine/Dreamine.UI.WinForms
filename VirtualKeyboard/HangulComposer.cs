@@ -146,8 +146,20 @@ internal sealed class HangulComposer
         }
 
         var lastChar = textBeforeCaret[^1];
-        if (!TryDecompose(lastChar, out var cho, out var currentJung, out var jong) || jong == 0)
+        if (!TryDecompose(lastChar, out var cho, out var currentJung, out var jong))
             return false;
+
+        if (jong == 0)
+        {
+            if (!CombinedJung.TryGetValue((currentJung, jung), out var combinedJung))
+                return false;
+
+            _cho = cho;
+            _jung = combinedJung;
+            _jong = 0;
+            edit = new HangulEdit(1, Compose(_cho, _jung, 0));
+            return true;
+        }
 
         if (SplitJong.TryGetValue(jong, out var split))
         {
