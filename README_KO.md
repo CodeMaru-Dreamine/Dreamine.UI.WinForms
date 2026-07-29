@@ -8,20 +8,26 @@
 
 # Dreamine.UI.WinForms
 
-[![license](https://img.shields.io/github/license/CodeMaru-Dreamine/Dreamine.UI.WinForms?label=license)](./LICENSE)
-[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
-[![WinForms](https://img.shields.io/badge/UI-WinForms-0078D4?logo=windows&logoColor=white)](https://learn.microsoft.com/dotnet/desktop/winforms/)
-[![Windows](https://img.shields.io/badge/platform-Windows-0078D4?logo=windows&logoColor=white)](https://www.microsoft.com/windows)
-
-[![NuGet](https://img.shields.io/nuget/v/Dreamine.UI.WinForms?logo=nuget&label=nuget)](https://www.nuget.org/packages/Dreamine.UI.WinForms)
-[![downloads](https://img.shields.io/nuget/dt/Dreamine.UI.WinForms?logo=nuget&label=downloads)](https://www.nuget.org/packages/Dreamine.UI.WinForms)
-[![GitHub stars](https://img.shields.io/github/stars/CodeMaru-Dreamine/Dreamine.UI.WinForms?logo=github&label=stars)](https://github.com/CodeMaru-Dreamine/Dreamine.UI.WinForms/stargazers)
+[![CI](https://github.com/CodeMaru-Dreamine/Dreamine.UI.WinForms/actions/workflows/ci.yml/badge.svg)](https://github.com/CodeMaru-Dreamine/Dreamine.UI.WinForms/actions/workflows/ci.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=CodeMaru-Dreamine_Dreamine.UI.WinForms&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=CodeMaru-Dreamine_Dreamine.UI.WinForms)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=CodeMaru-Dreamine_Dreamine.UI.WinForms&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=CodeMaru-Dreamine_Dreamine.UI.WinForms)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=CodeMaru-Dreamine_Dreamine.UI.WinForms&metric=coverage)](https://sonarcloud.io/summary/new_code?id=CodeMaru-Dreamine_Dreamine.UI.WinForms)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![.NET](https://img.shields.io/badge/.NET-8-512BD4)
+![WinForms](https://img.shields.io/badge/WinForms-Windows-0078D4)
+![Visual Studio](https://img.shields.io/badge/Visual_Studio-2022_|_2026-6f42c1)
+[![nuget](https://img.shields.io/nuget/v/Dreamine.UI.WinForms.svg)](https://www.nuget.org/packages/Dreamine.UI.WinForms)
+[![downloads](https://img.shields.io/nuget/dt/Dreamine.UI.WinForms.svg)](https://www.nuget.org/packages/Dreamine.UI.WinForms)
+[![문서](https://img.shields.io/badge/📖_문서-dreamine.kr-29b6f6)](https://dreamine.kr)
+[![가이드](https://img.shields.io/badge/📘_가이드-dreamine.kr-29b6f6)](https://dreamine.kr)
+[![플레이그라운드](https://img.shields.io/badge/🎮_플레이그라운드-dreamine.kr-7e57c2)](https://dreamine.kr)
+[![책](https://img.shields.io/badge/📖_책-Practical_MVVM_Architecture-black)](https://dreamine.kr)
 
 **Dreamine.UI.WinForms**는 `Dreamine.UI.Wpf.Controls`와 동일한 API를 WinForms 환경에서 제공하는 다크 테마 커스텀 컨트롤 라이브러리입니다.
 
 동일한 속성 이름(`Content`, `IsChecked`, `IsExpanded` 등)을 사용하므로, 하나의 ViewModel을 WPF와 WinForms 양쪽에서 코드 중복 없이 재사용할 수 있습니다.
 
-[➡️ English Documentation](./README.md)
+[➡️ English README](./README.md)
 
 ---
 
